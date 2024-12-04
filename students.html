@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Website</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> 
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            font-size: 18px;
+        }
+            header {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 20px 20px;
+            color: white;
+            position: fixed; 
+            top: 0; 
+            left: 0;
+            width: 100%; 
+            z-index: 1000; 
+            border-bottom: 3px solid rgb(67, 139, 255); 
+               }
+
+        .logo img {
+            height: 60px;
+            margin-right: 20px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin-left: auto;
+        }
+
+        nav ul li {
+            margin-left: 40px;
+        }
+
+        nav ul li a {
+            color: black;
+            text-decoration: none;
+            font-size: 20px;
+            padding: 20px;
+            transition: background-color 0.3s;
+            border-radius: 30px;
+        }
+
+        nav ul li a:hover {
+            background-color: rgb(54, 117, 219);
+            color: white;
+            border-radius: 30px;
+        }
+        footer {
+        text-align: center;
+        padding: 20px;
+        background-color: white;
+        color: black;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        border-top: 3px solid rgb(67, 139, 255); 
+         }
+        
+        .option-boxes {
+            display: flex;
+            flex-direction: column; 
+            justify-content: center;
+            align-items: center; 
+            margin-top: 40px;
+        }
+
+        .option-box {
+            width: 80%;
+            max-width: 400px; 
+            padding: 20px;
+            margin: 10px;
+            border: 2px solid #2eac95;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .option-box:hover {
+            transform: scale(1.05);
+        }
+
+        .option-box h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .box-icon {
+            color: #2eac95; 
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: brown;
+        }
+    </style>
+<style>
+  
+    .buffering-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; 
+    visibility: hidden; 
+    }
+
+    .spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1); 
+    border-top: 4px solid rgb(67, 139, 255); 
+    border-radius: 70%;
+    width: 50px;
+    height: 50px;
+    animation: spin 0.3s linear infinite;
+     }
+
+    
+    @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); 
+     }
+</style>
+</head>
+<body>
+
+
+<div id="buffering" class="buffering-container">
+    <div class="spinner"></div>
+</div>
+
+    <header>
+        <div class="logo">
+            <img src="images/0.jpg" alt="College Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="Index.html">Home</a></li>
+                <li><a href="about-us.html">About Us</a></li>
+                <li><a href="students.html">Students</a></li>
+                <li><a href="staff.html">Staff</a></li>
+                <li><a href="contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+     <p style="margin-bottom: 6em;">
+    <div class="option-boxes">
+        
+        <div class="option-box" onclick="window.location.href='std details/details.html'">
+            <i class="fas fa-user box-icon"></i>
+            <h3>Student Details</h3>
+            <p>View and update your personal details.</p>
+        </div>
+
+        
+        <div class="option-box" onclick="window.location.href='std details/academic.html'">
+            <i class="fas fa-graduation-cap box-icon"></i>
+            <h3>Student Academic Details</h3>
+            <p>View your academic progress and records.</p>
+        </div>
+
+       
+        <div class="option-box" onclick="window.location.href='std details/academicfees.html'">
+            <i class="fas fa-credit-card box-icon"></i>
+            <h3>Academic Fees Payment</h3>
+            <p>Pay your academic fees securely.</p>
+        </div>
+
+       
+        <div class="option-box" onclick="window.location.href='std details/fees.html'">
+            <i class="fas fa-file-invoice box-icon"></i>
+            <h3>Exam Fees Payment</h3>
+            <p>Pay for upcoming exams.</p>
+        </div>
+
+        
+        <div class="option-box" onclick="window.location.href='std details/supply fees.html'">
+            <i class="fas fa-clipboard-list box-icon"></i>
+            <h3>Supplementary Fees Payment</h3>
+            <p>Pay for supplementary exams.</p>
+        </div>
+    </div>
+    <script>
+         
+        const bufferingElement = document.getElementById('buffering');
+        
+        const navLinks = document.querySelectorAll('nav ul li a');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault(); 
+
+
+                bufferingElement.style.visibility = 'visible';
+
+               
+                setTimeout(() => {
+                    window.location.href = link.href; 
+                }, 500); 
+            });
+        });
+   
+</script>
+       <footer>
+        <p>&copy; 2024 Mysuru Royal Institute of Technology. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

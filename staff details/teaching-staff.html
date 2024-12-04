@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Details Upload</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .tab {
+            display: flex;
+            justify-content: space-around;
+            border-bottom: 2px solid #ccc;
+        }
+
+        .tab button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #ddd;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+
+        .tab button:hover {
+            background-color: #aaa;
+        }
+
+        .tab button.active {
+            background-color: rgb(36, 36, 218);
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="file"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        select {
+            padding: 10px;
+        }
+
+        .submit-btn {
+            background-color: rgb(36, 36, 218);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background-color: #43caff;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .image-preview {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Teacher Details Upload</h1>
+
+        <!-- Tab navigation -->
+        <div class="tab">
+            <button class="tablinks active" onclick="showForm(1)">Details</button>
+            <button class="tablinks" onclick="showForm(2)">Subjects</button>
+        </div>
+
+        <!-- Teacher Information Form -->
+        <form id="teacherForm" action="/upload" method="POST" enctype="multipart/form-data">
+            <!-- Basic Details Tab (Visible by Default) -->
+            <div id="form1">
+                <div class="form-group">
+                    <label for="name">Teacher Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter teacher's name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="photo">Upload Photo</label>
+                    <input type="file" id="photo" name="photo" accept="image/*" required>
+                    <img id="imagePreview" class="image-preview hidden" />
+                </div>
+
+                <div class="form-group">
+                    <label for="course">Course</label>
+                    <select id="course" name="course" onchange="updateSemester()" required>
+                        <option value="">Select Course</option>
+                        <option value="Computer Science Engineering">Computer Science Engineering</option>
+                        <option value="Civil Engineering">Civil Engineering</option>
+                        <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
+                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                        <option value="Information Technology">Information Technology</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="semester">Semester</label>
+                    <select id="semester" name="semester" onchange="updateSubjects()" required>
+                        <option value="">Select Semester</option>
+                    </select>
+                </div>
+
+                <button type="button" class="submit-btn" onclick="showForm(2)">Next</button>
+            </div>
+
+            <!-- Subjects Tab (Hidden Initially) -->
+            <div id="form2" class="hidden">
+                <div class="form-group">
+                    <label for="subjects">Select Subject(s)</label>
+                    <div id="subject-list"></div>
+                </div>
+
+                <button type="submit" class="submit-btn">Upload</button>
+                <button type="button" class="submit-btn" onclick="showForm(1)">Back</button>
+            </div>
+        </form>
+
+        <!-- Back Button (at the bottom) -->
+        <button class="submit-btn" onclick="window.location.href='../staff.html';">Exit</button>
+    </div>
+
+    <script>
+        const subjectsData = {
+            "Computer Science Engineering": {
+                1: ["Mathematics I", "Programming Fundamentals", "Physics", "Electrical Circuits", "Engineering Drawing"],
+                2: ["Data Structures", "Discrete Mathematics", "Digital Electronics", "Operating Systems", "Computer Networks"],
+                3: ["Database Management Systems", "Design and Analysis of Algorithms", "Software Engineering", "Mathematics III", "Computer Architecture"],
+                4: ["Theory of Computation", "Compiler Design", "Microprocessors", "Operating Systems II", "Artificial Intelligence"],
+                5: ["Computer Graphics", "Web Technologies", "Software Engineering II", "Machine Learning", "Data Science"],
+                6: ["Computer Networks II", "Distributed Systems", "Digital Signal Processing", "Mobile Computing", "Cloud Computing"],
+                7: ["Cyber Security", "Big Data Analytics", "Artificial Intelligence II", "Internet of Things", "Software Project Management"],
+                8: ["Machine Learning II", "Blockchain Technology", "Cloud Computing II", "Computer Vision", "Data Analytics"]
+            },
+            "Civil Engineering": {
+                1: ["Mathematics I", "Building Materials", "Surveying", "Physics", "Engineering Drawing"],
+                2: ["Strength of Materials", "Fluid Mechanics", "Geotechnical Engineering", "Structural Analysis", "Surveying II"],
+                3: ["Concrete Technology", "Environmental Engineering", "Transportation Engineering", "Water Resource Engineering", "Structural Design"],
+                4: ["Soil Mechanics", "Hydraulics", "Construction Management", "Advanced Structural Design", "Reinforced Concrete"],
+                5: ["Steel Structures", "Design of Bridges", "Geotechnical Engineering II", "Water Supply Systems", "Building Construction"],
+                6: ["Advanced Surveying", "Traffic Engineering", "Earthquake Engineering", "Wastewater Engineering", "Environmental Systems"],
+                7: ["Structural Health Monitoring", "Coastal Engineering", "Urban Infrastructure", "Advanced Concrete Technology", "Design of Foundations"],
+                8: ["Geotechnical Engineering III", "Coastal Structures", "Highway Engineering", "Sustainable Engineering", "Advanced Fluid Mechanics"]
+            },
+            "Electrical and Electronics Engineering": {
+                1: ["Mathematics I", "Basic Electrical Engineering", "Electronics", "Physics", "Engineering Drawing"],
+                2: ["Circuit Theory", "Signals and Systems", "Electromagnetic Fields", "Electronic Devices", "Digital Electronics"],
+                3: ["Electrical Machines", "Control Systems", "Power Systems", "Mathematics III", "Microprocessors"],
+                4: ["Power Electronics", "Electrical Measurements", "Communication Systems", "Instrumentation", "Electrical Power Distribution"],
+                5: ["Advanced Power Systems", "Renewable Energy Systems", "Electrical Drives", "Control of Electrical Machines", "Digital Signal Processing"],
+                6: ["High Voltage Engineering", "Electrical Safety", "Industrial Automation", "Power System Protection", "VLSI Design"],
+                7: ["Artificial Intelligence", "Smart Grids", "Power Electronics for Renewable Energy", "Embedded Systems", "Data Communication and Networks"],
+                8: ["Advanced Control Systems", "Electric Vehicle Technology", "Power System Dynamics", "Electrical Distribution Automation", "Wireless Communication"]
+            },
+            "Mechanical Engineering": {
+                1: ["Mathematics I", "Engineering Mechanics", "Material Science", "Physics", "Engineering Drawing"],
+                2: ["Thermodynamics", "Fluid Mechanics", "Strength of Materials", "Manufacturing Processes", "Mathematics II"],
+                3: ["Dynamics of Machines", "Heat Transfer", "Machine Design", "Machine Elements", "Production Engineering"],
+                4: ["Manufacturing Technology", "Fluid Machinery", "Internal Combustion Engines", "Vibrations", "Mechatronics"],
+                5: ["Refrigeration and Air Conditioning", "Finite Element Method", "Control Systems", "Automobile Engineering", "Advanced Manufacturing Processes"],
+                6: ["Power Plant Engineering", "Computational Fluid Dynamics", "Renewable Energy Sources", "Machine Design II", "Instrumentation and Control"],
+                7: ["Robotics", "Advanced Thermodynamics", "Finite Element Analysis", "Industrial Engineering", "Additive Manufacturing"],
+                8: ["Nanotechnology", "Advanced Fluid Mechanics", "Automotive Engineering", "Computer Aided Design (CAD)", "Energy Management"]
+            },
+            "Information Technology": {
+                1: ["Mathematics I", "Computer Programming", "Digital Electronics", "Physics", "Engineering Drawing"],
+                2: ["Data Structures", "Discrete Mathematics", "Computer Networks", "Database Management Systems", "Operating Systems"],
+                3: ["Design and Analysis of Algorithms", "Software Engineering", "Object Oriented Programming", "Mathematics III", "Web Technologies"],
+                4: ["Computer Graphics", "Artificial Intelligence", "Computer Architecture", "Computer Organization", "Software Project Management"],
+                5: ["Data Science", "Machine Learning", "Cloud Computing", "Big Data Analytics", "Computer Vision"],
+                6: ["Mobile Computing", "Distributed Systems", "Cyber Security", "Internet of Things", "Data Mining"],
+                7: ["Blockchain Technology", "Cyber Forensics", "Digital Image Processing", "Networking Security", "E-commerce"],
+                8: ["Advanced Data Science", "Cloud Computing II", "Artificial Intelligence II", "Natural Language Processing", "Software Quality Assurance"]
+            }
+        };
+
+        // Tab functionality
+        function showForm(tabNumber) {
+            document.querySelectorAll('.tablinks').forEach(button => button.classList.remove('active'));
+            document.querySelectorAll('.hidden').forEach(form => form.classList.add('hidden'));
+
+            document.querySelectorAll('.tablinks')[tabNumber - 1].classList.add('active');
+            document.getElementById('form' + tabNumber).classList.remove('hidden');
+        }
+
+        // Update semester options based on selected course
+        function updateSemester() {
+            const course = document.getElementById('course').value;
+            const semesterSelect = document.getElementById('semester');
+            semesterSelect.innerHTML = "<option value=''>Select Semester</option>";
+
+            if (course) {
+                for (let i = 1; i <= 8; i++) {
+                    let option = document.createElement('option');
+                    option.value = i;
+                    option.innerText = `Semester ${i}`;
+                    semesterSelect.appendChild(option);
+                }
+            }
+        }
+
+        // Update subjects based on selected semester
+        function updateSubjects() {
+            const course = document.getElementById('course').value;
+            const semester = document.getElementById('semester').value;
+            const subjectList = document.getElementById('subject-list');
+
+            if (course && semester) {
+                const subjects = subjectsData[course][semester];
+                subjectList.innerHTML = ""; // Clear previous subjects
+
+                subjects.forEach(subject => {
+                    const checkbox = document.createElement('input');
+                    checkbox.type = "checkbox";
+                    checkbox.name = "subjects[]";
+                    checkbox.value = subject;
+                    const label = document.createElement('label');
+                    label.appendChild(checkbox);
+                    label.appendChild(document.createTextNode(subject));
+                    subjectList.appendChild(label);
+                    subjectList.appendChild(document.createElement("br"));
+                });
+            }
+        }
+
+        // Image preview for photo upload
+        document.getElementById('photo').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('imagePreview').src = e.target.result;
+                    document.getElementById('imagePreview').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Website</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 20px 20px;
+            color: white;
+            position: fixed; 
+            top: 0; 
+            left: 0;
+            width: 100%; 
+            z-index: 1000; 
+            border-bottom: 3px solid rgb(67, 139, 255); 
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            font-size: 18px;
+            padding-top: 100px; 
+        }
+
+        .logo img {
+            height: 60px;
+            margin-right: 20px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin-left: auto;
+        }
+
+        nav ul li {
+            margin-left: 40px;
+        }
+
+        nav ul li a {
+            color: black;
+            text-decoration: none;
+            font-size: 20px;
+            padding: 20px;
+            transition: background-color 0.3s;
+            border-radius: 30px; 
+        }
+
+        nav ul li a:hover {
+            background-color: rgb(54, 117, 219);
+            color: white;
+            border-radius: 30px;
+        }
+       
+    .buffering-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; 
+    visibility: hidden; 
+    }
+    .spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1); 
+    border-top: 4px solid rgb(67, 139, 255); 
+    border-radius: 70%;
+    width: 50px;
+    height: 50px;
+    animation: spin 0.3s linear infinite; 
+    }
+    @keyframes spin 
+    {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+    }          
+        footer {
+        text-align: center;
+        padding: 20px;
+        background-color: white;
+        color: black;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        border-top: 3px solid rgb(67, 139, 255);
+        }
+      
+        .welcome-message {
+        text-align: center;
+        font-size: 48px;
+        font-weight: bold; 
+        color: #259ad0; 
+        margin-top: 20px; 
+        font-family: 'garamond', sans-serif; 
+        text-transform: uppercase; 
+        letter-spacing: 1px; 
+        }
+        .carousel-container
+            {
+            width: 80%;
+            max-width: 700px;
+            margin: 50px auto; 
+            position: relative;
+            overflow: hidden;        }
+
+        .carousel-images {
+            display: flex;
+            transition: transform 1s ease-in-out;         }
+
+        .carousel-image {
+            width: 100%;
+            display: block;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+        }
+
+        .carousel-dot {
+            height: 15px;
+            width: 15px;
+            margin: 0 5px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .carousel-dot.active {
+            background-color:  rgb(7, 54, 131);        }
+
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            font-size: 30px;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+          .courses-heading {
+            text-align: center;
+            font-size: 36px;
+            margin-top: 40px;
+            font-weight: bold;
+            color: #259ad0;
+       }
+           
+        .courses-section {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .course-box {
+            width: 250px;
+            padding: 20px;
+            margin: 10px;
+            border: 2px solid #2eac95;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-box h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .course-box p {
+            font-size: 16px;
+        }
+
+        .course-box .course-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: rgb(139, 68, 13);
+        }
+    </style>
+</head>
+<body>
+ 
+<div id="buffering" class="buffering-container">
+    <div class="spinner"></div>
+</div>
+
+    <header>
+        <div class="logo">
+            <img src="images/0.jpg" alt="College Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="Index.html">Home</a></li>
+                <li><a href="about-us.html">About Us</a></li>
+                <li><a href="students.html">Students</a></li>
+                <li><a href="staff.html">Staff</a></li>
+                <li><a href="contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="welcome-message">
+        WELCOME TO MYSURU ROYAL INSTITUTE OF TECHNOLOGY
+    </div>
+    <div class="carousel-container">
+            <div class="carousel-images">
+            <img class="carousel-image" src="images/Screenshot 2024-11-22 124834.png" alt="Image 1">
+            <img class="carousel-image" src="images/mysuru-royal-institute-of-technology-srirangapatna-mandya-institutes-5cce8qd4xc.avif" alt="Image 2">
+            <img class="carousel-image" src="images/myr1.jpg" alt="Image 3">
+            <img class="carousel-image" src="images/1483420110f-5.jpg" alt="Image 4">
+            <img class="carousel-image" src="images/1483420110f-2.jpg" alt="Image 4">
+            <img class="carousel-image" src="images/1483420110F-3.jpg" alt="Image 4">
+            <img class="carousel-image" src="images/1483420110f-1.jpg" alt="Image 4">
+            <img class="carousel-image" src="images/mysuru-royal-institute-of-technology-srirangapatna-mandya-institutes-lw74gfvdbl.avif" alt="Image 4">
+        </div>
+
+               <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+        <button class="next" onclick="moveSlide(1)">&#10095;</button>
+
+               <div class="carousel-dots">
+            <div class="carousel-dot active" onclick="changeImage(0)"></div>
+            <div class="carousel-dot" onclick="changeImage(1)"></div>
+            <div class="carousel-dot" onclick="changeImage(2)"></div>
+            <div class="carousel-dot" onclick="changeImage(3)"></div>
+            <div class="carousel-dot" onclick="changeImage(4)"></div>
+            <div class="carousel-dot" onclick="changeImage(5)"></div>
+            <div class="carousel-dot" onclick="changeImage(6)"></div>
+            <div class="carousel-dot" onclick="changeImage(7)"></div>
+        </div>
+    </div>
+                <div class="courses-heading">
+        <h1>Our Courses</h1>
+    </div>
+    <section class="courses-section">
+               <div class="course-box">
+            <i class="fas fa-laptop-code course-icon"></i>
+            <h3>Computer Science Engineering</h3>
+            <p>Explore cutting-edge technologies in software, algorithms, and data science.</p>
+        </div>
+
+               <div class="course-box">
+            <i class="fas fa-hard-hat course-icon"></i>
+            <h3>Civil Engineering</h3>
+            <p>Learn about the design, construction, and maintenance of infrastructure.</p>
+        </div>
+        <div class="course-box">
+            <i class="fas fa-microchip course-icon"></i>
+            <h3>Electronics and Communication Engineering</h3>
+            <p>Study the development of electrical systems and technologies.</p>
+        </div>
+
+            <div class="course-box">
+            <i class="fas fa-cogs course-icon"></i>
+            <h3>Mechanical Engineering</h3>
+            <p>Focus on designing and manufacturing machines and mechanical systems.</p>
+        </div>
+
+              <div class="course-box">
+            <i class="fas fa-network-wired course-icon"></i>
+            <h3>Information Science</h3>
+            <p>Gain expertise in networking, programming, and IT systems.</p>
+        </div>
+    </section>
+
+
+    <script>
+        let currentIndex = 0;
+        const totalImages = document.querySelectorAll('.carousel-image').length;
+        const imagesContainer = document.querySelector('.carousel-images');
+        const dots = document.querySelectorAll('.carousel-dot'); 
+              function changeImage(index) {
+            currentIndex = index;
+            updateCarousel();
+        }
+
+        
+        function moveSlide(direction) {
+            currentIndex = (currentIndex + direction + totalImages) % totalImages; // Wrap around if out of bounds
+            updateCarousel();
+        }
+
+               function updateCarousel() {
+                       imagesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[currentIndex].classList.add('active');
+        }
+
+        let autoSlide = setInterval(() => moveSlide(1), 3000);
+
+
+        document.querySelector('.carousel-container').addEventListener('mouseenter', () => {
+            clearInterval(autoSlide);
+        });
+
+        document.querySelector('.carousel-container').addEventListener('mouseleave', () => {
+            autoSlide = setInterval(() => moveSlide(1), 3000);
+        });
+        const bufferingElement = document.getElementById('buffering');
+
+       const navLinks = document.querySelectorAll('nav ul li a');
+
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault(); 
+
+                bufferingElement.style.visibility = 'visible';
+
+                setTimeout(() => {
+                    window.location.href = link.href; 
+                }, 350);
+            });
+        });
+    </script>
+     <p style="margin-bottom: 2em;">
+<footer>
+        <p>&copy; 2024 Mysuru Royal Institute of Technology. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

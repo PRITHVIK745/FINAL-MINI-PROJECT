@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Academic Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+        }
+        .box {
+            background-color: #f4f4f4;
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        .section-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        input, select {
+            padding: 8px;
+            margin: 5px 0;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #43caff;
+        }
+        .flex {
+            display: flex;
+            justify-content: space-between;
+        }
+        .attendance-section {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .attendance-section select {
+            margin-right: 10px;
+        }
+        .attendance-section .day-row {
+            margin-bottom: 10px;
+        }
+        .marks-section input {
+            width: 50px;
+        }
+        .assignment-section input {
+            width: 50px;
+        }
+        .back-next-button-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            padding: 20px 0;
+        }
+        .back-next-button-container button {
+            padding: 10px 15px;
+            font-size: 1rem;
+        }
+        .back-next-button-container {
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="box">
+        <h2>Course Information</h2>
+        
+        <div class="section-title">Student Name:</div>
+        <input type="text" id="studentName" placeholder="Enter student name">
+        
+        <div class="section-title">Select Course:</div>
+        <select id="courseSelect" onchange="updateSubjects()">
+            <option value="Computer Science Engineering">Computer Science Engineering</option>
+            <option value="Civil Engineering">Civil Engineering</option>
+            <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
+            <option value="Mechanical Engineering">Mechanical Engineering</option>
+            <option value="Information Technology">Information Technology</option>
+        </select>
+        
+        <div class="section-title">Date of Joining:</div>
+        <input type="date" id="joiningDate">
+        
+        <div class="section-title">Select Semester:</div>
+        <select id="semesterSelect" onchange="updateSubjects()">
+            <option value="1">Semester 1</option>
+            <option value="2">Semester 2</option>
+            <option value="3">Semester 3</option>
+            <option value="4">Semester 4</option>
+            <option value="5">Semester 5</option>
+            <option value="6">Semester 6</option>
+            <option value="7">Semester 7</option>
+            <option value="8">Semester 8</option>
+        </select>
+        
+        <div class="section-title">Subjects:</div>
+        <div id="subjectsList"></div>
+    </div>
+
+    <div class="box attendance-section">
+        <h2>Attendance Marking</h2>
+        <div class="section-title">Mark Attendance for Each Day:</div>
+        <div id="attendanceRows"></div>
+        <div class="flex">
+            <button onclick="addAttendanceRow()">Add Day</button>
+            <button onclick="calculateAttendance()">Calculate Percentage</button>
+        </div>
+        <div class="section-title">Attendance Percentage:</div>
+        <input type="text" id="attendancePercentage" readonly>
+    </div>
+
+    <div class="box marks-section">
+        <h2>Test Marks</h2>
+        <div class="section-title">Enter Marks for Internals (For each subject, max 30 marks):</div>
+        <div id="testMarksFields"></div>
+        <button onclick="uploadTestMarks()">Upload Marks</button>
+    </div>
+
+    <div class="box assignment-section">
+        <h2>Assignment Marks</h2>
+        <div class="section-title">Enter Assignment Marks for Each Subject (max 20 marks):</div>
+        <div id="assignmentMarksFields"></div>
+        <button onclick="uploadAssignmentMarks()">Upload Assignment Marks</button>
+    </div>
+
+    <div class="back-next-button-container">
+        <button onclick="window.history.back()">Back</button>
+        <button onclick="window.location.href='academicfees.html'">Next</button>
+    </div>
+
+</div>
+
+<script>
+const subjects = {
+    "Computer Science Engineering": {
+        1: ["Mathematics I", "Programming Fundamentals", "Physics", "Electrical Circuits", "Engineering Drawing"],
+        2: ["Data Structures", "Discrete Mathematics", "Digital Electronics", "Operating Systems", "Computer Networks"],
+        3: ["Database Management Systems", "Design and Analysis of Algorithms", "Software Engineering", "Mathematics III", "Computer Architecture"],
+        4: ["Theory of Computation", "Compiler Design", "Microprocessors", "Operating Systems II", "Artificial Intelligence"],
+        5: ["Computer Graphics", "Web Technologies", "Software Engineering II", "Machine Learning", "Data Science"],
+        6: ["Computer Networks II", "Distributed Systems", "Digital Signal Processing", "Mobile Computing", "Cloud Computing"],
+        7: ["Cyber Security", "Big Data Analytics", "Artificial Intelligence II", "Internet of Things", "Software Project Management"],
+        8: ["Machine Learning II", "Blockchain Technology", "Cloud Computing II", "Computer Vision", "Data Analytics"]
+    },
+    "Civil Engineering": {
+        1: ["Mathematics I", "Building Materials", "Surveying", "Physics", "Engineering Drawing"],
+        2: ["Strength of Materials", "Fluid Mechanics", "Geotechnical Engineering", "Structural Analysis", "Surveying II"],
+        3: ["Concrete Technology", "Environmental Engineering", "Transportation Engineering", "Water Resource Engineering", "Structural Design"],
+        4: ["Soil Mechanics", "Hydraulics", "Construction Management", "Advanced Structural Design", "Reinforced Concrete"],
+        5: ["Steel Structures", "Design of Bridges", "Geotechnical Engineering II", "Water Supply Systems", "Building Construction"],
+        6: ["Advanced Surveying", "Traffic Engineering", "Earthquake Engineering", "Wastewater Engineering", "Environmental Systems"],
+        7: ["Structural Health Monitoring", "Coastal Engineering", "Urban Infrastructure", "Advanced Concrete Technology", "Design of Foundations"],
+        8: ["Geotechnical Engineering III", "Coastal Structures", "Highway Engineering", "Sustainable Engineering", "Advanced Fluid Mechanics"]
+    },
+    "Electrical and Electronics Engineering": {
+        1: ["Mathematics I", "Basic Electrical Engineering", "Electronics", "Physics", "Engineering Drawing"],
+        2: ["Circuit Theory", "Electromagnetic Fields", "Digital Electronics", "Signals and Systems", "Microprocessors"],
+        3: ["Control Systems", "Electrical Machines", "Power Electronics", "Electrical Measurements", "Power Systems"],
+        4: ["Communication Systems", "Digital Signal Processing", "Renewable Energy Systems", "Power Systems II", "Electrical Design"],
+        5: ["Control Theory", "Microelectronics", "Electrical Drives", "Embedded Systems", "Advanced Power Systems"],
+        6: ["Communication Networks", "Electrical Power Distribution", "Power Systems III", "Smart Grids", "Advanced Electronics"],
+        7: ["Power Electronics II", "VLSI Design", "High Voltage Engineering", "Electric Vehicle Technology", "Energy Storage Systems"],
+        8: ["Advanced Control Systems", "Artificial Intelligence in Power Systems", "Power System Protection", "Renewable Energy Technology", "Smart Cities"]
+    },
+    "Mechanical Engineering": {
+        1: ["Mathematics I", "Engineering Mechanics", "Fluid Mechanics", "Materials Science", "Engineering Drawing"],
+        2: ["Strength of Materials", "Thermodynamics", "Manufacturing Processes", "Machine Design", "Material Science II"],
+        3: ["Machine Dynamics", "Heat Transfer", "Fluid Machinery", "Internal Combustion Engines", "Manufacturing Technology II"],
+        4: ["Control Systems", "Production Engineering", "Refrigeration and Air Conditioning", "Advanced Thermodynamics", "Design of Mechanical Systems"],
+        5: ["Finite Element Analysis", "Mechanical Vibration", "Robotics", "Mechanical System Design", "Thermal Engineering"],
+        6: ["Power Plant Engineering", "Automobile Engineering", "Mechatronics", "Computational Fluid Dynamics", "Process Control"],
+        7: ["Renewable Energy Systems", "Advanced Robotics", "Engineering Management", "Industrial Automation", "Aerodynamics"],
+        8: ["Computational Mechanics", "Advanced Machine Design", "Manufacturing Automation", "Non-Destructive Testing", "Sustainable Engineering"]
+    },
+    "Information Technology": {
+        1: ["Mathematics I", "Programming Fundamentals", "Computer Organization", "Digital Electronics", "Engineering Drawing"],
+        2: ["Data Structures", "Discrete Mathematics", "Operating Systems", "Database Management Systems", "Computer Networks"],
+        3: ["Software Engineering", "Computer Architecture", "Design and Analysis of Algorithms", "Data Communications", "Web Technologies"],
+        4: ["Artificial Intelligence", "Software Engineering II", "Cyber Security", "Digital Signal Processing", "Microprocessors"],
+        5: ["Machine Learning", "Big Data", "Cloud Computing", "Mobile Computing", "Internet of Things"],
+        6: ["Digital Image Processing", "Advanced Database Management", "Data Science", "Web Development", "Computer Vision"],
+        7: ["Cyber Security II", "Blockchain Technology", "Artificial Intelligence II", "Deep Learning", "Cloud Computing II"],
+        8: ["Internet of Things II", "Data Analytics", "Machine Learning II", "Advanced Software Engineering", "Cloud Computing III"]
+    }
+};
+function updateSubjects() {
+    const courseSelect = document.getElementById('courseSelect');
+    const semesterSelect = document.getElementById('semesterSelect');
+    const subjectsList = document.getElementById('subjectsList');
+    const testMarksFields = document.getElementById('testMarksFields');
+    const assignmentMarksFields = document.getElementById('assignmentMarksFields');
+    const selectedCourse = courseSelect.value;
+    const selectedSemester = parseInt(semesterSelect.value);
+    const semesterSubjects = subjects[selectedCourse][selectedSemester];   
+
+    subjectsList.innerHTML = '';
+    testMarksFields.innerHTML = '';
+    assignmentMarksFields.innerHTML = '';
+
+    semesterSubjects.forEach(subject => {
+        const div = document.createElement('div');
+        div.textContent = subject;
+        subjectsList.appendChild(div);
+
+        
+        const testDiv = document.createElement('div');
+        testDiv.innerHTML = `${subject}: <input type="number" min="0" max="30" class="testMarks" data-subject="${subject}">`;
+        testMarksFields.appendChild(testDiv);
+
+        
+        const assignmentDiv = document.createElement('div');
+        assignmentDiv.innerHTML = `${subject}: <input type="number" min="0" max="20" class="assignmentMarks" data-subject="${subject}">`;
+        assignmentMarksFields.appendChild(assignmentDiv);
+    });
+}
+
+function addAttendanceRow() {
+    const attendanceRows = document.getElementById('attendanceRows');
+    const newRow = document.createElement('div');
+    newRow.classList.add('day-row');
+    newRow.innerHTML = `
+        <label>Day: </label><input type="date" class="attendance-date">
+        <label>Status: </label><select class="attendance-status">
+            <option value="Present">Present</option>
+            <option value="Absent">Absent</option>
+        </select>
+    `;   
+    attendanceRows.appendChild(newRow);
+}
+
+function calculateAttendance() {
+    const attendanceRows = document.querySelectorAll('.attendance-row');
+    let presentCount = 0;
+    let totalCount = attendanceRows.length;
+
+    attendanceRows.forEach(row => {
+        const status = row.querySelector('.attendance-status').value;
+        if (status === 'Present') {
+            presentCount++;
+        }
+    });
+
+    const percentage = (presentCount / totalCount) * 100;
+    document.getElementById('attendancePercentage').value = percentage.toFixed(2) + '%';
+}
+
+function uploadTestMarks() {
+    const testMarks = document.querySelectorAll('.testMarks');
+    testMarks.forEach(mark => {
+        const subject = mark.getAttribute('data-subject');
+        const markValue = mark.value;
+        if (markValue) {
+            alert(`${subject} Test Marks: ${markValue} uploaded successfully!`);
+        }
+    });
+}
+
+function uploadAssignmentMarks() {
+    const assignmentMarks = document.querySelectorAll('.assignmentMarks');
+    assignmentMarks.forEach(mark => {
+        const subject = mark.getAttribute('data-subject');
+        const markValue = mark.value;
+        if (markValue) {
+            alert(`${subject} Assignment Marks: ${markValue} uploaded successfully!`);
+        }
+    });
+}
+
+updateSubjects(); 
+</script>
+</body>
+</html>

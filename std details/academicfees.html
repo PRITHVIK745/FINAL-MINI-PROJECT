@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Fees Payment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        select, option, input {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px 0;
+            width: 100%;
+        }
+        .total {
+            font-weight: bold;
+            font-size: 1.2em;
+            text-align: right;
+        }
+        .payment-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: rgb(36, 36, 218);
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        .payment-btn:hover {
+            background-color: #43caff;
+        }
+        .bank-transfer-info, .card-info, .online-payment-info {
+            display: none;
+            margin-top: 20px;
+        }
+        .payment-method-container input {
+            width: 100%;
+        }
+        .back-next-button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 20px 0;
+        }
+
+        .back-next-button-container button {
+            padding: 10px 20px;
+            background-color: rgb(36, 36, 218);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-next-button-container button:hover {
+            background-color: #43caff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Academic Fees Payment</h1>
+
+        <!-- Course Selection -->
+        <div class="section">
+            <h2>Select Course</h2>
+            <select id="courseSelect" onchange="updateFees()">
+                <option value="Computer Science Engineering">Computer Science Engineering</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Information Technology">Information Technology</option>
+            </select>
+        </div>
+
+        <!-- Register Number -->
+        <div class="section" id="registerSection" style="display: none;">
+            <h2>Enter Register Number</h2>
+            <input type="text" id="registerNumber" placeholder="Enter your register number">
+        </div>
+
+        <!-- Semester Selection -->
+        <div class="section">
+            <h2>Select Semester</h2>
+            <select id="semesterSelect" onchange="updateFees()">
+                <option value="1">Semester 1</option>
+                <option value="2">Semester 2</option>
+                <option value="3">Semester 3</option>
+                <option value="4">Semester 4</option>
+                <option value="5">Semester 5</option>
+                <option value="6">Semester 6</option>
+                <option value="7">Semester 7</option>
+                <option value="8">Semester 8</option>
+            </select>
+        </div>
+
+        <!-- Fees Breakdown -->
+        <div class="section" id="feesSection">
+            <h2>Fee Breakdown</h2>
+            <p>College Fees: ₹<span id="collegeFees">0</span></p>
+            <p>Library Fees: ₹<span id="libraryFees">0</span></p>
+            <p>Bus Fees: ₹<span id="busFees">0</span></p>
+            <p class="total">Total Fee: ₹<span id="totalAmount">0</span></p>
+        </div>
+
+        <!-- Payment Method Selection -->
+        <div class="section">
+            <h2>Select Payment Method</h2>
+            <select id="paymentMethodSelect" onchange="showPaymentDetails()">
+                <option value="card">Credit/Debit Card</option>
+                <option value="online">Online Payment</option>
+                <option value="bank">Bank Transfer</option>
+            </select>
+        </div>
+
+        <!-- Credit/Debit Card Information -->
+        <div class="section card-info" id="cardInfo">
+            <h2>Enter Credit/Debit Card Details</h2>
+            <input type="text" id="cardNumber" placeholder="Enter Card Number">
+            <input type="text" id="cardExpiry" placeholder="Enter Expiry Date (MM/YY)">
+            <input type="text" id="cardCVC" placeholder="Enter CVC">
+        </div>
+
+        <!-- Online Payment Information (Google Pay, PhonePe, etc.) -->
+        <div class="section online-payment-info" id="onlinePaymentInfo">
+            <h2>Select Your Online Payment Method</h2>
+            <select id="onlinePaymentMethod">
+                <option value="googlePay">Google Pay</option>
+                <option value="phonePe">PhonePe</option>
+                <option value="amazonPay">Amazon Pay</option>
+                <option value="paytm">Paytm</option>
+            </select>
+            <input type="text" id="onlinePaymentNumber" placeholder="Enter your phone number linked to the payment app">
+        </div>
+
+        <!-- Bank Transfer Information -->
+        <div class="section bank-transfer-info" id="bankTransferInfo">
+            <h2>Enter Bank Transfer Details</h2>
+            <input type="text" id="bankName" placeholder="Enter Bank Name">
+            <input type="text" id="accountNumber" placeholder="Enter Account Number">
+            <input type="text" id="ifscCode" placeholder="Enter IFSC Code">
+        </div>
+
+        <!-- Proceed to Payment -->
+        <button class="payment-btn" onclick="proceedToPayment()">Proceed to Payment</button>
+    </div>
+    <div class="back-next-button-container">
+    <button type="button" onclick="window.location.href='../students.html'">Back</button>
+    <button type="button" onclick="window.location.href='fees.html'">Next</button>
+    </div>
+    <script>
+        const feeStructure = {
+            "Computer Science Engineering": {
+                "collegeFee": 20000,
+                "libraryFee": 1500,
+                "busFee": 2500
+            },
+            "Civil Engineering": {
+                "collegeFee": 22000,
+                "libraryFee": 1500,
+                "busFee": 2700
+            },
+            "Electrical and Electronics Engineering": {
+                "collegeFee": 21000,
+                "libraryFee": 1600,
+                "busFee": 2600
+            },
+            "Mechanical Engineering": {
+                "collegeFee": 22000,
+                "libraryFee": 1500,
+                "busFee": 2800
+            },
+            "Information Technology": {
+                "collegeFee": 20000,
+                "libraryFee": 1400,
+                "busFee": 2400
+            }
+        };
+        function updateFees() {
+            const course = document.getElementById('courseSelect').value;
+            const semester = document.getElementById('semesterSelect').value;
+            document.getElementById('registerSection').style.display = 'block';
+            const fees = feeStructure[course];
+            let total = fees.collegeFee + fees.libraryFee + fees.busFee;
+            document.getElementById('collegeFees').textContent = fees.collegeFee;
+            document.getElementById('libraryFees').textContent = fees.libraryFee;
+            document.getElementById('busFees').textContent = fees.busFee;
+            document.getElementById('totalAmount').textContent = total;
+        }
+        function showPaymentDetails() {
+            const paymentMethod = document.getElementById('paymentMethodSelect').value;
+            document.getElementById('cardInfo').style.display = 'none';
+            document.getElementById('onlinePaymentInfo').style.display = 'none';
+            document.getElementById('bankTransferInfo').style.display = 'none';
+
+            if (paymentMethod === 'card') {
+                document.getElementById('cardInfo').style.display = 'block';
+            } else if (paymentMethod === 'online') {
+                document.getElementById('onlinePaymentInfo').style.display = 'block';
+            } else if (paymentMethod === 'bank') {
+                document.getElementById('bankTransferInfo').style.display = 'block';
+            }
+        }
+        function proceedToPayment() {
+            const totalAmount = document.getElementById('totalAmount').textContent;
+            const registerNumber = document.getElementById('registerNumber').value;
+            const paymentMethod = document.getElementById('paymentMethodSelect').value;
+
+            if (registerNumber === "") {
+                alert("Please enter your register number.");
+                return;
+            }
+
+            let paymentDetails = `Register Number: ${registerNumber}\nTotal Amount: ₹${totalAmount}`;
+
+            if (paymentMethod === 'card') {
+                const cardNumber = document.getElementById('cardNumber').value;
+                const cardExpiry = document.getElementById('cardExpiry').value;
+                const cardCVC = document.getElementById('cardCVC').value;
+
+                if (!cardNumber || !cardExpiry || !cardCVC) {
+                    alert("Please fill in all card details.");
+                    return;
+                }
+
+                paymentDetails += `\nCard Number: ${cardNumber}\nExpiry Date: ${cardExpiry}\nCVC: ${cardCVC}`;
+            } else if (paymentMethod === 'online') {
+                const onlinePaymentMethod = document.getElementById('onlinePaymentMethod').value;
+                const onlinePaymentNumber = document.getElementById('onlinePaymentNumber').value;
+
+                if (!onlinePaymentNumber) {
+                    alert("Please fill in your phone number linked to the payment app.");
+                    return;
+                }
+
+                paymentDetails += `\nOnline Payment Method: ${onlinePaymentMethod}\nPhone Number: ${onlinePaymentNumber}`;
+            } else if (paymentMethod === 'bank') {
+                const bankName = document.getElementById('bankName').value;
+                const accountNumber = document.getElementById('accountNumber').value;
+                const ifscCode = document.getElementById('ifscCode').value;
+
+                if (!bankName || !accountNumber || !ifscCode) {
+                    alert("Please fill in all bank transfer details.");
+                    return;
+                }
+
+                paymentDetails += `\nBank Name: ${bankName}\nAccount Number: ${accountNumber}\nIFSC Code: ${ifscCode}`;
+            }
+
+            alert(`Proceeding to payment: \n${paymentDetails}`);
+        }
+        function nextFunction() {
+            window.location.href = "next-page-url.html";
+        }
+    </script>
+    </script>
+</body>
+</html>

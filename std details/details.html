@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .file-upload {
+            padding: 5px;
+        }
+        .submit-btn {
+            background-color: rgb(36, 36, 218);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #43caff;
+        }
+        .back-next-button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 20px 0;
+        }
+
+        .back-next-button-container button {
+            padding: 10px 20px;
+            background-color: rgb(36, 36, 218);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-next-button-container button:hover {
+            background-color: #43caff;
+        }
+    </style>
+</head>
+<body>
+    <h2>Student Registration Form</h2>
+    <form action="your-server-endpoint" method="post" enctype="multipart/form-data">
+        <div class="section">
+            <h3>Personal Details</h3>
+            <label for="student_name">Student Name:</label>
+            <input type="text" id="student_name" name="student_name" required>
+
+            <label for="parent_name">Parent's Name:</label>
+            <input type="text" id="parent_name" name="parent_name" required>
+
+            <label for="student_phone">Student's Phone Number:</label>
+            <input type="tel" id="student_phone" name="student_phone" required>
+
+            <label for="parent_phone">Parent's Phone Number:</label>
+            <input type="tel" id="parent_phone" name="parent_phone" required>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="home_address">Home Address:</label>
+            <textarea id="home_address" name="home_address" rows="4" required></textarea>
+
+            <label for="blood_group">Blood Group:</label>
+            <select id="blood_group" name="blood_group" required>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+            </select>
+
+            <label for="student_photo">Upload Photo:</label>
+            <input type="file" id="student_photo" name="student_photo" class="file-upload" accept="image/*" required>
+        </div>
+
+        <div class="section">
+            <h3>School Details</h3>
+            <label for="school_name">School Name:</label>
+            <input type="text" id="school_name" name="school_name" required>
+
+            <label for="syllabus_type_school">Syllabus Type (School):</label>
+            <select id="syllabus_type_school" name="syllabus_type_school" required>
+                <option value="CBSE">CBSE</option>
+                <option value="State">State</option>
+            </select>
+
+            <label for="percentage_school">Percentage in School:</label>
+            <input type="number" id="percentage_school" name="percentage_school" step="0.01" required>
+        </div>
+
+        <div class="section">
+            <h3>College Details</h3>
+            <label for="college_name">College Name:</label>
+            <input type="text" id="college_name" name="college_name" required>
+
+            <label for="syllabus_type_college">Syllabus Type (College):</label>
+            <select id="syllabus_type_college" name="syllabus_type_college" required>
+                <option value="CBSE">CBSE</option>
+                <option value="State">State</option>
+            </select>
+
+            <label for="percentage_college">Percentage in College:</label>
+            <input type="number" id="percentage_college" name="percentage_college" step="0.01" required>
+        </div>
+
+        <div class="section">
+            <h3>Engineering College Details</h3>
+            <label for="course_name">Course Name (Select your Engineering Course):</label>
+            <select id="course_name" name="course_name" required>
+                <option value="Computer Science Engineering">Computer Science Engineering</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Information Technology">Information Technology</option>
+            </select>
+
+            <label for="date_of_joining">Date of Joining:</label>
+            <input type="date" id="date_of_joining" name="date_of_joining" required>
+
+            <label for="seat_type">KCET or Management Seat:</label>
+            <select id="seat_type" name="seat_type" required>
+                <option value="KCET">KCET</option>
+                <option value="Management">Management</option>
+            </select>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit</button>
+    </form>
+
+    <div class="back-next-button-container">
+        <button type="button" onclick="window.location.href='../students.html'">Back</button>
+        <button type="button" onclick="window.location.href='academic.html'">Next</button>
+    </div>
+
+    <script>
+        function nextFunction() {
+            window.location.href = "next-page-url.html";
+        }
+    </script>
+</body>
+</html>

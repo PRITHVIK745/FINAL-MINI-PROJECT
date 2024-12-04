@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>College Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: ; 
+            margin: 0;
+            padding: 0;
+            font-size: 18px; 
+        }
+            header {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 20px 20px;
+            color: white;
+            position: fixed; 
+            top: 0; 
+            left: 0;
+            width: 100%; 
+            z-index: 1000; 
+            border-bottom: 3px solid rgb(67, 139, 255); 
+        }
+
+        .logo img {
+            height: 60px;
+            margin-right: 20px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin-left: auto;
+        }
+
+        nav ul li {
+            margin-left: 40px;
+        }
+
+        nav ul li a {
+            color: black;
+            text-decoration: none;
+            font-size: 20px;
+            padding: 20px;
+            transition: background-color 0.3s;
+            border-radius: 30px;
+        }
+
+        nav ul li a:hover {
+            background-color: rgb(54, 117, 219);
+            color: white;
+            border-radius: 30px;
+        }      
+        main {
+            padding: 20px;
+        }
+         
+        section {
+            margin: 20px 0;
+        }
+        footer {
+        text-align: center;
+        padding: 20px;
+        background-color: white;
+        color: black;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        border-top: 3px solid rgb(67, 139, 255);
+
+        }
+
+        .about-text p {
+            font-size: 18px; 
+        }
+
+        .about-text h1 {
+            font-size: 36px;
+        }
+
+        .image-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .image-section h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .image-section img {
+            width: 100%;
+            max-width: 800px;
+            height: 100;
+        }
+
+        
+        .options-section {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .options-section h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .options-boxes {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .option-box {
+            width: 250px;
+            padding: 20px;
+            border: 2px solid #2eac95;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .option-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 10px rgba(0, 0, 0, 0.15);
+        }
+        .option-box i {
+            color: rgb(139, 68, 13);  
+            margin-bottom: 10px; 
+            font-size: 2em;
+            transition: color 0.3s ease-in-out;
+        }
+        
+        .option-box:hover i {
+            color: #2e8b57; 
+        }
+        .option-box h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+             color: black;
+        }
+
+        .option-box p {
+            font-size: 16px;
+              color: black;
+        }
+
+    </style>
+    <style>
+
+    .buffering-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; 
+    visibility: hidden; 
+    }
+
+    .spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1); 
+    border-top: 4px solid rgb(67, 139, 255); 
+    border-radius: 70%;
+    width: 50px;
+    height: 50px;
+    animation: spin 0.3s linear infinite; 
+     }
+
+   
+    @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); 
+     }
+     </style>
+     </head>
+     <body>
+     
+
+<div id="buffering" class="buffering-container">
+    <div class="spinner"></div>
+</div>
+
+    <header>    
+        <div class="logo">
+            <img src="images/0.jpg" alt="College Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="Index.html">Home</a></li>
+                <li><a href="about-us.html">About Us</a></li>
+                <li><a href="students.html">Students</a></li>
+                <li><a href="staff.html">Staff</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+            <p style="margin-bottom: 6em;">
+            <h1>Welcome to Our College</h1>
+               <p style="margin-bottom: 1em;">
+            <p>Welcome to Mysuru Royal Institute of Technology (MRIT), an esteemed engineering college committed to providing world-class education and fostering innovation. Located in the heritage city of Mysuru, Karnataka, MRIT is dedicated to shaping the next generation of engineers, leaders, and innovators who will contribute to society's progress.</p>
+   <p style="margin-bottom: 1em;">
+            <p>The mission of Mysuru Royal Institute of Technology (MRIT) is to provide high-quality education in engineering and technology while ensuring holistic development. We aim to develop individuals who not only excel academically but also contribute to society through leadership, creativity, and innovation. MRIT strives to instill strong values and ethics that will guide students to make a positive impact on the world.</p>
+   <p style="margin-bottom: 1em;">
+            <p>Mysuru Royal Institute of Technology (MRIT) was established in [Year] with the goal of providing top-tier engineering education to students in Karnataka and beyond. Over the years, MRIT has consistently focused on academic excellence, skill development, and research initiatives to prepare students for the ever-changing technological landscape. The college has rapidly grown into one of the leading institutions in the region, offering undergraduate and postgraduate programs in various engineering disciplines.</p>
+               <p style="margin-bottom: 1em;">
+            <h2>Academic Programs</h2>
+   <p style="margin-bottom: 1em;">
+            <p>MRIT offers a wide variety of undergraduate and postgraduate programs, each designed to equip students with the knowledge and skills required to excel in their careers. Some of our core programs include:</p>
+              <p style="margin-bottom: 1em;">
+                <li>Bachelor of Engineering (B.E.) in Computer Science Engineering</li>
+                   <p style="margin-bottom: 1em;">
+                <li>Bachelor of Engineering (B.E.) in Civil Engineering</li>
+   <p style="margin-bottom: 1em;">                
+<li>Bachelor of Engineering (B.E.) in Electronics and Communication Engineering</li>
+   <p style="margin-bottom: 1em;">                
+<li>Bachelor of Engineering (B.E.) in Mechanical Engineering</li>
+   <p style="margin-bottom: 1em;">               
+ <li>Bachelor of Engineering (B.E.) in Information Science</li>
+   <p style="margin-bottom: 1em;">
+           
+            <p>In addition to these, MRIT also offers postgraduate programs in engineering, aimed at deepening students' expertise in their chosen fields.</p>
+        </section>
+ </main>
+        
+               <section class="options-section">
+            <h2>Our Facilities</h2>
+            <div class="options-boxes">
+                <div class="option-box">
+                <i class="fas fa-book fa-3x"></i>
+                    <h3>Library</h3>
+                    <p>Explore a vast collection of books and journals.</p>
+                </div>
+                
+                <div class="option-box">
+                <i class="fas fa-futbol fa-3x"></i>                   
+                    <h3>Sports</h3>
+                    <p>Enjoy outdoor and indoor sports like football, cricket, badminton, and more.</p>
+                </div>
+
+              
+                <div class="option-box">
+                <i class="fas fa-bus fa-3x"></i> 
+                    <h3>Bus Facility</h3>
+                    <p>Convenient bus routes connecting the campus with the city.</p>
+                </div>
+
+                
+                <div class="option-box">
+                <i class="fas fa-briefcase fa-3x"></i> 
+                    <h3>Placement & Training</h3>
+                    <p>Skill enhancement programs and campus placement opportunities with leading companies.</p>
+                </div>
+            </div>
+        </section>
+  <script>
+  
+        const bufferingElement = document.getElementById('buffering');
+        const navLinks = document.querySelectorAll('nav ul li a');
+
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                bufferingElement.style.visibility = 'visible';
+
+                                setTimeout(() => {
+                    window.location.href = link.href; 
+                }, 500); 
+            });
+        });
+</script>     
+    <footer>
+        <p>&copy; 2024 Mysuru Royal Institute of Technology. All rights reserved.</p>
+    </footer>
+</body>
+</html>

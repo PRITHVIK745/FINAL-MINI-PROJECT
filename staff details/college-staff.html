@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Details Upload</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .staff-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            border: 2px solid #ccc;
+        }
+
+        .staff-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="file"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .submit-btn {
+            background-color: rgb(36, 36, 218);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-color: #43caff;
+        }
+
+        .image-preview {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-top: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .cleaning-staff-section input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .back-btn {
+            background-color: rgb(36, 36, 218);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .back-btn:hover {
+            background-color: #43caff;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Staff Details Upload</h1>
+
+        <!-- Office Staff Section -->
+        <div class="staff-section" id="office-staff">
+            <h2>Office Staff</h2>
+            <form id="office-staff-form" action="/upload-office-staff" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="office-name">Name</label>
+                    <input type="text" id="office-name" name="name" placeholder="Enter name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="office-photo">Upload Photo</label>
+                    <input type="file" id="office-photo" name="photo" accept="image/*" required>
+                    <img id="office-imagePreview" class="image-preview hidden" />
+                </div>
+
+                <div class="form-group">
+                    <label for="office-role">Role</label>
+                    <select id="office-role" name="role" required>
+                        <option value="">Select Role</option>
+                        <option value="Administrator">Administrator</option>
+                        <option value="Accountant">Accountant</option>
+                        <option value="HR">HR</option>
+                        <option value="Receptionist">Receptionist</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-btn">Upload Office Staff</button>
+            </form>
+        </div>
+
+        <!-- Library & Lab Staff Section -->
+        <div class="staff-section" id="library-lab-staff">
+            <h2>Library and Lab Staff</h2>
+            <form id="library-lab-staff-form" action="/upload-library-lab-staff" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="library-lab-name">Name</label>
+                    <input type="text" id="library-lab-name" name="name" placeholder="Enter name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="library-lab-photo">Upload Photo</label>
+                    <input type="file" id="library-lab-photo" name="photo" accept="image/*" required>
+                    <img id="library-lab-imagePreview" class="image-preview hidden" />
+                </div>
+
+                <div class="form-group">
+                    <label for="library-lab-role">Role</label>
+                    <select id="library-lab-role" name="role" required>
+                        <option value="">Select Role</option>
+                        <option value="Librarian">Librarian</option>
+                        <option value="Lab Assistant">Lab Assistant</option>
+                        <option value="Technical Support">Technical Support</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-btn">Upload Library and Lab Staff</button>
+            </form>
+        </div>
+
+        <!-- Cleaning Staff Section -->
+        <div class="staff-section cleaning-staff-section" id="cleaning-staff">
+            <h2>Cleaning Staff</h2>
+            <form id="cleaning-staff-form" action="/upload-cleaning-staff" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="cleaning-name">Name</label>
+                    <input type="text" id="cleaning-name" name="name" placeholder="Enter name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cleaning-photo">Upload Photo</label>
+                    <input type="file" id="cleaning-photo" name="photo" accept="image/*" required>
+                    <img id="cleaning-imagePreview" class="image-preview hidden" />
+                </div>
+
+                <div class="form-group">
+                    <label for="cleaning-role">Role</label>
+                    <select id="cleaning-role" name="role" required>
+                        <option value="">Select Role</option>
+                        <option value="Cleaner">Cleaner</option>
+                        <option value="Supervisor">Supervisor</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="cleaning-shifts">Select Shifts</label><br>
+                    <input type="checkbox" id="morning-shift" name="shift" value="Morning">
+                    <label for="morning-shift">Morning Shift</label><br>
+                    <input type="checkbox" id="evening-shift" name="shift" value="Evening">
+                    <label for="evening-shift">Evening Shift</label><br>
+                    <input type="checkbox" id="night-shift" name="shift" value="Night">
+                    <label for="night-shift">Night Shift</label>
+                </div>
+
+                <button type="submit" class="submit-btn">Upload Cleaning Staff</button>
+            </form>
+        </div>
+
+        <!-- Back Button Section -->
+        <button class="back-btn" onclick="window.location.href='../staff.html'">Back</button>
+    </div>
+
+    <script>
+        // Image preview for photo upload
+        function previewImage(inputId, previewId) {
+            const file = document.getElementById(inputId).files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById(previewId).src = e.target.result;
+                    document.getElementById(previewId).classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Event listeners for image preview
+        document.getElementById('office-photo').addEventListener('change', function() {
+            previewImage('office-photo', 'office-imagePreview');
+        });
+        document.getElementById('library-lab-photo').addEventListener('change', function() {
+            previewImage('library-lab-photo', 'library-lab-imagePreview');
+        });
+        document.getElementById('cleaning-photo').addEventListener('change', function() {
+            previewImage('cleaning-photo', 'cleaning-imagePreview');
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Fees Payment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .fee-box {
+            background-color: #e9ecef;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .fee-box h3 {
+            margin-top: 0;
+        }
+        .total {
+            font-weight: bold;
+            font-size: 1.2em;
+            text-align: right;
+        }
+        .payment-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: rgb(36, 36, 218);
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        .payment-btn:hover {
+            background-color: #43caff;
+        }
+        select, option, input {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px 0;
+            width: 100%;
+        }
+        .payment-method {
+            margin-top: 20px;
+        }
+        .payment-details {
+            display: none;
+            margin-top: 20px;
+        }
+        #subjectList {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        #subjectList div {
+            display: flex;
+            align-items: center;
+            width: 250px;
+        }
+
+        #subjectList input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .select-all-checkbox {
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .select-all-checkbox input {
+            margin-right: 10px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 50px;
+        }
+        .back-next-button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 20px 0;
+            gap: 20px;
+            align-items: center; 
+            margin-top: 20px; 
+        }
+        .back-next-button-container button {
+            padding: 10px 20px;
+            background-color: rgb(36, 36, 218);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-next-button-container button:hover {
+            background-color: #43caff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Exam Fees Payment</h1>
+        
+        <div class="section">
+            <h2>Select Course</h2>
+            <select id="courseSelect" onchange="updateSubjects()">
+                <option value="Information Technology">Information Technology</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Computer Science Engineering">Computer Science Engineering</option>
+            </select>
+        </div>
+
+        <div class="section" id="registerNumberSection" style="display: none;">
+            <h2>Enter Register Number</h2>
+            <input type="text" id="registerNumber" placeholder="Enter your Register Number">
+        </div>
+
+        <div class="section">
+            <h2>Select Semester</h2>
+            <select id="semesterSelect" onchange="updateSubjects()">
+                <option value="1">Semester 1</option>
+                <option value="2">Semester 2</option>
+                <option value="3">Semester 3</option>
+                <option value="4">Semester 4</option>
+                <option value="5">Semester 5</option>
+                <option value="6">Semester 6</option>
+                <option value="7">Semester 7</option>
+                <option value="8">Semester 8</option>
+            </select>
+        </div>
+
+        <div class="section" id="subjectsSection">
+            <h2>Select Subjects</h2>
+            <div class="select-all-checkbox">
+                <input type="checkbox" id="selectAllSubjects" onclick="toggleSubjectSelection()"> 
+                <label for="selectAllSubjects">Select All Subjects</label>
+            </div>
+            <div id="subjectList"></div>
+        </div>
+
+        <div class="section">
+            <h2>Marks Card</h2>
+            <input type="checkbox" id="marksCardCheckbox" onchange="updateTotal()"> Add Marks Card (₹350)
+        </div>
+
+        <div class="fee-box">
+            <h3>Exam Fees Summary</h3>
+            <p>Total Fee: ₹<span id="totalAmount">0</span></p>
+        </div>
+
+        <div class="section">
+            <h2>Select Payment Method</h2>
+            <select id="paymentMethodSelect" onchange="showPaymentDetails()">
+                <option value="card">Credit/Debit Card</option>
+                <option value="online">Online Payment</option>
+            </select>
+        </div>
+
+        <div class="payment-details" id="cardDetails">
+            <h3>Card Payment Details</h3>
+            <input type="text" id="cardNumber" placeholder="Card Number">
+            <input type="text" id="expiryDate" placeholder="Expiry Date">
+            <input type="text" id="cvv" placeholder="CVV">
+        </div>
+
+        <div class="payment-details" id="onlinePaymentMethods">
+            <h3>Online Payment Methods</h3>
+            <select id="onlinePaymentMethod">
+                <option value="googlepay">Google Pay</option>
+                <option value="phonepe">PhonePe</option>
+                <option value="paytm">Paytm</option>
+                <option value="amazonpay">Amazon Pay</option>
+            </select>
+        </div>
+        
+        <button class="payment-btn" onclick="proceedToPayment()">Proceed to Payment</button>
+    </div>
+
+    <div class="back-next-button-container">
+        <button type="button" onclick="window.location.href='../students.html'">Back</button>
+        <button type="button" onclick="window.location.href='supply fees.html'">Next</button>
+    </div>
+
+    <script>
+    const subjects = {
+        "Information Technology": {
+            1: ["Mathematics I", "Programming Fundamentals", "Computer Organization", "Digital Electronics", "Engineering Drawing"],
+            2: ["Data Structures", "Discrete Mathematics", "Operating Systems", "Database Management Systems", "Computer Networks"],
+            3: ["Software Engineering", "Computer Architecture", "Design and Analysis of Algorithms", "Data Communications", "Web Technologies"],
+            4: ["Artificial Intelligence", "Software Engineering II", "Cyber Security", "Digital Signal Processing", "Microprocessors"],
+            5: ["Machine Learning", "Big Data", "Cloud Computing", "Mobile Computing", "Internet of Things"],
+            6: ["Digital Image Processing", "Advanced Database Management", "Data Science", "Web Development", "Computer Vision"],
+            7: ["Cyber Security II", "Blockchain Technology", "Artificial Intelligence II", "Deep Learning", "Cloud Computing II"],
+            8: ["Internet of Things II", "Data Analytics", "Machine Learning II", "Advanced Software Engineering", "Cloud Computing III"]
+        },
+        "Computer Science Engineering": {
+            1: ["Mathematics I", "Programming Fundamentals", "Physics", "Electrical Circuits", "Engineering Drawing"],
+            2: ["Data Structures", "Discrete Mathematics", "Digital Electronics", "Operating Systems", "Computer Networks"],
+            3: ["Database Management Systems", "Design and Analysis of Algorithms", "Software Engineering", "Mathematics III", "Computer Architecture"],
+            4: ["Theory of Computation", "Compiler Design", "Microprocessors", "Operating Systems II", "Artificial Intelligence"],
+            5: ["Computer Graphics", "Web Technologies", "Software Engineering II", "Machine Learning", "Data Science"],
+            6: ["Computer Networks II", "Distributed Systems", "Digital Signal Processing", "Mobile Computing", "Cloud Computing"],
+            7: ["Cyber Security", "Big Data Analytics", "Artificial Intelligence II", "Internet of Things", "Software Project Management"],
+            8: ["Machine Learning II", "Blockchain Technology", "Cloud Computing II", "Computer Vision", "Data Analytics"]
+        },
+        "Civil Engineering": {
+            1: ["Mathematics I", "Building Materials", "Surveying", "Physics", "Engineering Drawing"],
+            2: ["Strength of Materials", "Fluid Mechanics", "Geotechnical Engineering", "Structural Analysis", "Surveying II"],
+            3: ["Concrete Technology", "Environmental Engineering", "Transportation Engineering", "Water Resource Engineering", "Structural Design"],
+            4: ["Soil Mechanics", "Hydraulics", "Construction Management", "Advanced Structural Design", "Reinforced Concrete"],
+            5: ["Steel Structures", "Design of Bridges", "Geotechnical Engineering II", "Water Supply Systems", "Building Construction"],
+            6: ["Advanced Surveying", "Traffic Engineering", "Earthquake Engineering", "Wastewater Engineering", "Environmental Systems"],
+            7: ["Structural Health Monitoring", "Coastal Engineering", "Urban Infrastructure", "Advanced Concrete Technology", "Design of Foundations"],
+            8: ["Geotechnical Engineering III", "Coastal Structures", "Highway Engineering", "Sustainable Engineering", "Advanced Fluid Mechanics"]
+        },
+        "Electrical and Electronics Engineering": {
+            1: ["Mathematics I", "Basic Electrical Engineering", "Electronics", "Physics", "Engineering Drawing"],
+            2: ["Circuit Theory", "Electromagnetic Fields", "Digital Electronics", "Signals and Systems", "Microprocessors"],
+            3: ["Control Systems", "Electrical Machines", "Power Electronics", "Electrical Measurements", "Power Systems"],
+            4: ["Communication Systems", "Digital Signal Processing", "Renewable Energy Systems", "Power Systems II", "Electrical Design"],
+            5: ["Control Theory", "Microelectronics", "Electrical Drives", "Embedded Systems", "Advanced Power Systems"],
+            6: ["Communication Networks", "Electrical Power Distribution", "Power Systems III", "Smart Grids", "Advanced Electronics"],
+            7: ["Power Electronics II", "VLSI Design", "High Voltage Engineering", "Electric Vehicle Technology", "Energy Storage Systems"],
+            8: ["Advanced Control Systems", "Artificial Intelligence in Power Systems", "Power System Protection", "Renewable Energy Technology", "Smart Cities"]
+        },
+        "Mechanical Engineering": {
+            1: ["Mathematics I", "Engineering Mechanics", "Fluid Mechanics", "Materials Science", "Engineering Drawing"],
+            2: ["Strength of Materials", "Thermodynamics", "Manufacturing Processes", "Machine Design", "Material Science II"],
+            3: ["Machine Dynamics", "Heat Transfer", "Fluid Machinery", "Internal Combustion Engines", "Manufacturing Technology II"],
+            4: ["Control Systems", "Production Engineering", "Refrigeration and Air Conditioning", "Advanced Thermodynamics", "Design of Mechanical Systems"],
+            5: ["Finite Element Analysis", "Mechanical Vibration", "Robotics", "Mechanical System Design", "Thermal Engineering"],
+            6: ["Power Plant Engineering", "Automobile Engineering", "Mechatronics", "Computational Fluid Dynamics", "Process Control"],
+            7: ["Renewable Energy Systems", "Advanced Robotics", "Engineering Management", "Industrial Automation", "Aerodynamics"],
+            8: ["Computational Mechanics", "Advanced Machine Design", "Manufacturing Automation", "Non-Destructive Testing", "Sustainable Engineering"]
+        }
+    };
+        function updateSubjects() {
+            const course = document.getElementById("courseSelect").value;
+            const semester = document.getElementById("semesterSelect").value;
+            const subjectList = document.getElementById("subjectList");
+            const subjectsForCourse = subjects[course][semester];
+
+            subjectList.innerHTML = '';
+
+            subjectsForCourse.forEach(subject => {
+                const div = document.createElement("div");
+                div.innerHTML = `<input type="checkbox" class="subjectCheckbox" value="${subject}" onclick="updateTotal()"> ${subject}`;
+                subjectList.appendChild(div);
+            });
+
+            updateTotal();
+        }
+
+        function toggleSubjectSelection() {
+            const selectAll = document.getElementById("selectAllSubjects").checked;
+            const checkboxes = document.querySelectorAll(".subjectCheckbox");
+            checkboxes.forEach(checkbox => checkbox.checked = selectAll);
+            updateTotal();
+        }
+
+        function updateTotal() {
+            const selectedSubjects = document.querySelectorAll(".subjectCheckbox:checked");
+            const marksCardAdded = document.getElementById("marksCardCheckbox").checked;
+            const total = selectedSubjects.length * 500 + (marksCardAdded ? 350 : 0);
+            document.getElementById("totalAmount").textContent = total;
+        }
+
+        function showPaymentDetails() {
+            const paymentMethod = document.getElementById("paymentMethodSelect").value;
+            if (paymentMethod === "card") {
+                document.getElementById("cardDetails").style.display = "block";
+                document.getElementById("onlinePaymentMethods").style.display = "none";
+            } else {
+                document.getElementById("cardDetails").style.display = "none";
+                document.getElementById("onlinePaymentMethods").style.display = "block";
+            }
+        }
+
+        function proceedToPayment() {
+            alert("Proceeding to Payment");
+        }
+    </script>
+</body>
+</html>
